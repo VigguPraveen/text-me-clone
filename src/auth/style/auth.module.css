@@ -1,6 +1,6 @@
 .loginbox{
   width: 40%;
-  height: 400px;
+  height: auto;
   background-color: rgb(50, 116, 109);
   margin-left: 30%;
   margin-top: 5%;
@@ -10,15 +10,14 @@
 }
 
 .heading{
-  color: white;
-   
+  color: white; 
+  text-align: center;
 }
 
 .forminputs{
   width: 80%;
   height: 300px;
   margin-left: 10%;
-  margin-top: 5%;
   padding-top: 5%;
 }
 
@@ -31,5 +30,8 @@
 }
 .grid{
   padding-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
+}
+.switchPage{
+  color: white;
 }

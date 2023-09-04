@@ -1,39 +1,36 @@
 import { Box, Button, Container, Grid, TextField, Typography } from "@mui/material"
+import { Link } from "react-router-dom";
 import Header from "../components/layout/Header"
-import classes from '../auth/style/login.module.css'
+import classes from '../auth/style/auth.module.css'
 import { useReducer } from "react";
 import { MOBILE_NUMBER, PASSWORD } from "../constants/typeConstants";
-import { loginReducer } from "./actions/auth-actions";
-
+import { loginReducer } from "./actions/authReducer";
 
 function Login() {
 
-   const initialLoginValues = {
+  const initialLoginValues = {
     mobileNumber: "",
     password: ""
   }
 
   const [currentLoginInputState, dispatchLoginInput] = useReducer(loginReducer, initialLoginValues)
 
-const loginMobileNumberHandler = (e) => {
-   dispatchLoginInput({type: MOBILE_NUMBER, payload: e.target.value}) 
-}
-  
-  const loginPasswordHandler = (e) => {
-  dispatchLoginInput({type: PASSWORD, payload: e.target.value})
+  const loginMobileNumberHandler = (e) => {
+    dispatchLoginInput({ type: MOBILE_NUMBER, payload: e.target.value })
   }
-  
+
+  const loginPasswordHandler = (e) => {
+    dispatchLoginInput({ type: PASSWORD, payload: e.target.value })
+  }
+
   const validateLoginHandler = () => {
     console.log(currentLoginInputState)
   }
   return (
     <>
-
       <Header />
       <Container>
-
         <Box className={classes.loginbox} >
-
           <Typography variant="h3" component="h2" className={classes.heading}>
             Login
           </Typography>
@@ -63,9 +60,7 @@ const loginMobileNumberHandler = (e) => {
             <Grid className={classes.grid}>
               <Button onClick={validateLoginHandler} variant="contained">Login </Button>
             </Grid>
-
-
-
+            <Typography className={classes.switchPage}>New User ? <Link className={classes.switchPage} to='/register'>Click here to Signup</Link></Typography>
           </form>
         </Box>
 

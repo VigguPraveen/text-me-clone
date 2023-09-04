@@ -1,0 +1,51 @@
+.profilePicSection{
+    width: 65px;
+    height: 65px;
+    margin: 5px;
+    border-radius: 50%;
+    background-color: white;
+}
+.avatar{
+    width: 65px;
+    height: 65px;
+    background-color: hsl(220, 2%, 74%);
+}
+.selectPicture{
+    visibility: hidden;
+}
+
+.profileImage{
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: none;
+}
+
+.customfileinput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.customfileinput {
+    width: 65px;
+    height: 65px;
+    background-color: #5050d7;
+    cursor: pointer;
+    border: none;
+    white-space: nowrap;
+   -webkit-user-select: none;
+   
+}
+
+ label.label input[type="file"] {
+        position: absolute;
+        top: -1000px;
+      }
+
+.label {
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0px 2px;
+  margin: 5px;
+  background: white;
+  display: inline-block;
+  font-size: 20px;
+}
