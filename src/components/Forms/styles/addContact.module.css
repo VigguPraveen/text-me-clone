@@ -1,0 +1,19 @@
+.label{
+    font-size: 18px;
+    font-weight: 600;
+    text-align: left;
+}
+.input{
+    display: flex;
+    height: 25px;
+    font-size: 18px;
+    color: #4949be;
+}
+.buttonContainer{
+    margin-top: 4%;
+    display: flex;
+    justify-content: flex-end;
+}
+.buttonContainer>Button{
+    margin-right: 3%;
+}

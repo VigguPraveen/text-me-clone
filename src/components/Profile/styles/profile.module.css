@@ -43,7 +43,6 @@
 .label {
   cursor: pointer;
   border-radius: 50%;
-  padding: 0px 2px;
   margin: 5px;
   background: white;
   display: inline-block;

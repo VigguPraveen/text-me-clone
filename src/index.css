@@ -6,6 +6,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* scrollbar width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/*scrollbar Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/*scrollbar Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/*scrollbar Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
