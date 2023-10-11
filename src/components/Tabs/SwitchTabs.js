@@ -8,14 +8,13 @@ function SwitchTabs(props) {
 
     const switchTabHandler = (event, value) => {
         setTabs(value)
+        props.getTabKey(value)
     }
 
     return (
         <Tabs className={classes.tabs} value={tabs} onChange={switchTabHandler}>
             <Tab  label="Chats" />
-            <Tab label="Contacts" />
-            
-            
+            <Tab label="Contacts" /> 
         </Tabs>
     );
 }

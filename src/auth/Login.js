@@ -5,6 +5,7 @@ import classes from '../auth/style/auth.module.css'
 import { useReducer } from "react";
 import { MOBILE_NUMBER, PASSWORD } from "../constants/typeConstants";
 import { loginReducer } from "./actions/authReducer";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
@@ -12,6 +13,8 @@ function Login() {
     mobileNumber: "",
     password: ""
   }
+
+  const navigate = useNavigate()
 
   const [currentLoginInputState, dispatchLoginInput] = useReducer(loginReducer, initialLoginValues)
 
@@ -24,7 +27,28 @@ function Login() {
   }
 
   const validateLoginHandler = () => {
-    console.log(currentLoginInputState)
+
+    const userDetails = {
+      mobile_number: currentLoginInputState.mobileNumber,
+      password: currentLoginInputState.password
+    }
+    fetch('http://localhost:8000/login', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(userDetails)
+    }).then(res => res.text())
+      .then((data) => {
+        if (data) {
+          navigate('/chat')
+          sessionStorage.setItem('storeNumber', data)
+        } else {
+          alert(data)
+        }
+      console.log(data)
+    })
+     
   }
   return (
     <>

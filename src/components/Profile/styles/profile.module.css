@@ -1,13 +1,13 @@
 .profilePicSection{
-    width: 65px;
-    height: 65px;
+    width: 55px;
+    height: 55px;
     margin: 5px;
     border-radius: 50%;
     background-color: white;
 }
 .avatar{
-    width: 65px;
-    height: 65px;
+    width: 55px;
+    height: 55px;
     background-color: hsl(220, 2%, 74%);
 }
 .selectPicture{
