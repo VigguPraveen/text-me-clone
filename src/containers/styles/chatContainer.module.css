@@ -1,7 +1,6 @@
 .chatContainer{
-    width: 69%;
+    width: 69.5%;
     height: 100vh;
     background-color: hsl(0, 27%, 98%);
-    overflow-y: scroll;
     float: left;
 }

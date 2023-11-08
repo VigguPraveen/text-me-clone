@@ -6,6 +6,7 @@ import { useReducer } from "react";
 import { MOBILE_NUMBER, PASSWORD } from "../constants/typeConstants";
 import { loginReducer } from "./actions/authReducer";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
 
@@ -32,17 +33,11 @@ function Login() {
       mobile_number: currentLoginInputState.mobileNumber,
       password: currentLoginInputState.password
     }
-    fetch('http://localhost:8000/login', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(userDetails)
-    }).then(res => res.text())
+    axios.post('http://localhost:9898/login', userDetails)
       .then((data) => {
         if (data) {
           navigate('/chat')
-          sessionStorage.setItem('storeNumber', data)
+          sessionStorage.setItem('storeNumber', data.data)
         } else {
           alert(data)
         }

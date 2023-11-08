@@ -1,22 +1,10 @@
-.chatdiv{
-    display: flex;
-    position: absolute;
-    bottom: 1%;
-    width: 68%;
-    height: 45px;
-}
 
-.chatbox{
-    width: 94%;
-    height: 40px;
-    margin-left: 0.5%;
-    padding-left: 1%;
-    padding-right: 1%;
-    border-radius: 4px; 
-    font-size: 16px;
+.chatbox:focus{
+    border: 2px #4c4cbc;
 }
 .send_msg_icon{
     margin-top: 1%;
+    margin-left: 1%;
 }
 .moreVertIcon{
     margin-top: 6%;

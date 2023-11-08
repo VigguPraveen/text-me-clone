@@ -11,11 +11,11 @@ function ProfilePicture(props) {
     })
     const [pageRelaod, setPageReload] = useState(0)
 
-    const selectProfilePictureHandler = (e) => {   
+    const selectProfilePictureHandler = (e) => {
         const formdata = new FormData()
         formdata.append('image', e.target.files[0])
-       
-        axios.post('http://localhost:8000/setProfileImage', formdata)
+
+        axios.post('http://localhost:9898/setProfileImage', formdata)
             .then(res => {
                 console.log(res)
                 const number = Math.random()
@@ -30,23 +30,26 @@ function ProfilePicture(props) {
             mobile_number: mobileNumber
         }
 
-        axios.post(`http://localhost:8000/setNumber`, obj)
+        axios.post(`http://localhost:9898/setNumber`, obj)
             .then(res => console.log(res))
 
-        axios.get('http://localhost:8000/getProfile')
+        axios.get('http://localhost:9898/getProfile')
             .then(res => {
-                setProfileImage({
-                    image: res.data.image,
-                    default: false
-                })
+                if (res.data.image !== null) {
+                    setProfileImage({
+                        image: res.data.image,
+                        default: false
+                    })
+                }
+
             })
         console.log("useeffect")
-       
+
     }, [pageRelaod])
     return (
         <label className={classes.label}>
             <input type='file' className={classes.customfileinput} onChange={selectProfilePictureHandler} />
-            <img src={profileImage.default?profileImage.image:`http://localhost:8000/images/${profileImage.image}`} className={classes.profileImage} alt="profile_image" />
+            <img src={profileImage.default ? profileImage.image : `http://localhost:9898/images/${profileImage.image}`} className={classes.profileImage} alt="profile_image" />
         </label>
     );
 }

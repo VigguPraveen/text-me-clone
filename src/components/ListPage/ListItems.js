@@ -1,46 +1,76 @@
 import React, { useState } from 'react';
-import ProfilePicture from '../Profile/ProfilePicture';
 import classes from './styles/listItems.module.css'
-import MoreVertIconComponent from '../common/MoreVertIcon';
-import PopOverComponent from '../common/PopOverComponent';
+import { eventBus } from '../../Event bus/eventBus';
+import axios from 'axios';
 
-const popoverZones = {
-    vertical: 'top',
-    horizontal: 'right'
-}
-const popoverContent = ["Start Chat"]
 
 function ListItems(props) {
 
-    const [openPopover, setOpenPopover] = useState(false)
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [chattingPerson, setChattingPerson] = useState("")
+    const [refreshKey, setRefreshKey] = useState(0)
 
-    const togglePopoverHandler = (e) => {
-        setOpenPopover(!openPopover)
-        setAnchorEl(e.currentTarget)
+    const redirectToChatHandler = (item) => {
+        eventBus.dispatch("chatterDetails", { message: item })
+        setChattingPerson(item.personB)
     }
 
-    const getPopoverState = (value) => {
-        setOpenPopover(value)
-    }
+    const renderData = ({ data, tabkey, chatsList }) => {
 
-    const renderData = ({ data }) => {
-        if (data) {
+        eventBus.on("refreshKey", (data) => {
+            setRefreshKey(data.message)
+            console.log(refreshKey)
+        })
+
+        const result = []
+        const obj = {
+            personBNumber: chattingPerson
+        }
+        console.log(obj)
+        setTimeout(() => {
+            axios.post('http://localhost:9898/getOnePersonChat', obj)
+                .then((res) => {
+                    if (res.status === 200) {
+                        console.log(res.data)
+                        result.push(res.data)
+                        console.log(result)
+                        eventBus.dispatch("FullChats", { message: result })
+                    }
+                }).catch((err) => {
+                    console.log(err)
+                })
+        }, 500)
+
+
+        if (data.length > 0 && tabkey === 1) {
             return data.map((item) => {
                 return (
-                    <div className={classes.list_main}>
-                        <div className={classes.profile_div}>
-                            <img className={classes.profile_image} src={item.image} />
-                        </div>
-                        <div className={classes.profile_name}>{item.name}</div>
-                        <div className={classes.icon}>
-                            <MoreVertIconComponent onClick={togglePopoverHandler} />
-                            <PopOverComponent anchor={anchorEl} isopen={openPopover} popoverPositions={popoverZones} sendState={(value) => { getPopoverState(value) }} data={popoverContent} />
-
+                    <div className={classes.list_main} onClick={() => { redirectToChatHandler(item) }}>
+                        <div className={classes.list_sub}>
+                            <div className={classes.profile_div}>
+                                <img className={classes.profile_image} src={item.profileimage === "null" ?"https://i.ibb.co/ns11w2C/avatar.webp" : `http://localhost:9898/images/${item.profileimage}` } alt="profileImage" />
+                            </div>
+                            <div className={classes.profile_name}>{item.name}</div>
                         </div>
                     </div>
                 )
             })
+        } else if (chatsList.length > 0 && tabkey === 0) {
+            return chatsList.map((item) => {
+                return (
+                    <div className={classes.list_main} onClick={() => { redirectToChatHandler(item) }}>
+                        <div className={classes.list_sub}>
+                            <div className={classes.profile_div}>
+                                <img className={classes.profile_image} src={item.profileimage === "null" ? "https://i.ibb.co/ns11w2C/avatar.webp" : `http://localhost:9898/images/${item.profileimage}`} alt="profileImage" />
+                            </div>
+                            <div className={classes.profile_name}>{item.name}</div>
+                        </div>
+                        <p className={classes.lastchat}>{item.chats}</p>
+                    </div>
+
+                )
+            })
+        } else if (data.length === 0 && tabkey === 0) {
+            return <p className={classes.noShow}>No chats to display</p>
         }
     }
     return (

@@ -35,7 +35,7 @@ function AddContactForm(props) {
             personBNumber: addContactState.mobileNumber,
             personANumber: storedNumber
         }
-        fetch('http://localhost:8000/addContact', { method: 'POST', headers: { "content-type": 'application/json' }, body: JSON.stringify(request) })
+        fetch('http://localhost:9898/addContact', { method: 'POST', headers: { "content-type": 'application/json' }, body: JSON.stringify(request) })
             .then(res => {
                 if (res.status === 200) {
                     props.popupStatus(false)

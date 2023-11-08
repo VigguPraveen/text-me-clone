@@ -3,6 +3,7 @@ import classes from '../styles/listContainer.module.css'
 import PageController from '../../components/ListPage/PageController';
 import { ListItem } from '@mui/material';
 import ListItems from '../../components/ListPage/ListItems';
+import axios from 'axios';
 
 let API_URL;
 
@@ -10,27 +11,33 @@ function ListContainer(props) {
 
     const [tabKey, setTabKey] = useState(0)
     const [listData, setListData] = useState([])
+    const [chatterList, setChatterList] = useState([])
 
     useEffect(() => {
-
+        const chatterArray = []
         if (tabKey === 0) {
-            API_URL = `http://localhost:8000/getAllChatters`
+            API_URL = `http://localhost:9898/getChat`
         } else if (tabKey === 1) {
-            API_URL = `http://localhost:8000/getAllContacts`
+            API_URL = `http://localhost:9898/getAllContacts`
         }
-        const personANumber = sessionStorage.getItem('storeNumber')
-        const obj = {
-            personANumber: personANumber
-        }
-    
-        fetch(`${API_URL}`,
-            {
-                method: 'POST',
-                headers: { "content-type": 'application/json' },
-                body: JSON.stringify(obj)
+
+        axios.get(`${API_URL}`)
+            .then((res) => {
+                setListData(res.data)
+                if (tabKey === 0) {
+                    res.data.map((item) => {
+                        chatterArray.push(item)
+                    })
+
+                    const ids = chatterArray.map(({ personB }) => personB);
+                    const filtered = chatterArray.filter(({ personB }, index) =>
+                        !ids.includes(personB, index + 1));
+
+                    setChatterList(filtered)
+                    console.log(chatterList)
+                }
+
             })
-            .then(res => res.json())
-            .then((data)=>setListData(data))
     }, [tabKey])
 
     const getTabKey = (key) => {
@@ -39,7 +46,7 @@ function ListContainer(props) {
     return (
         <div className={classes.listContainer}>
             <PageController getTabKeyByParent={(key) => getTabKey(key)} />
-            <ListItems data={listData} />
+            <ListItems data={listData} tabkey={tabKey} chatsList={chatterList} />
         </div>
     );
 }

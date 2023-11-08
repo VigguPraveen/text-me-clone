@@ -40,7 +40,7 @@ function Signup() {
             password: registerUserState.password
         }
         setLoader(true)
-        fetch("http://localhost:8000/registerUser", {
+        fetch("http://localhost:9898/registerUser", {
             method: "POST",
             body: JSON.stringify(request),
             headers: {
