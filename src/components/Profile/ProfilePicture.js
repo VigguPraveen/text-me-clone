@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import classes from './styles/profile.module.css';
 import axios from 'axios';
 
-
 function ProfilePicture(props) {
-
     const [profileImage, setProfileImage] = useState({
         image: "https://i.ibb.co/ns11w2C/avatar.webp",
         default: true
@@ -14,7 +12,6 @@ function ProfilePicture(props) {
     const selectProfilePictureHandler = (e) => {
         const formdata = new FormData()
         formdata.append('image', e.target.files[0])
-
         axios.post('http://localhost:9898/setProfileImage', formdata)
             .then(res => {
                 console.log(res)
@@ -23,16 +20,13 @@ function ProfilePicture(props) {
             })
             .catch(err => console.log(err))
     }
-
     useEffect(() => {
         const mobileNumber = sessionStorage.getItem('storeNumber');
         const obj = {
             mobile_number: mobileNumber
         }
-
         axios.post(`http://localhost:9898/setNumber`, obj)
             .then(res => console.log(res))
-
         axios.get('http://localhost:9898/getProfile')
             .then(res => {
                 if (res.data.image !== null) {
@@ -40,11 +34,13 @@ function ProfilePicture(props) {
                         image: res.data.image,
                         default: false
                     })
+                } else {
+                    setProfileImage({
+                        image: "https://i.ibb.co/ns11w2C/avatar.webp",
+                        default: true
+                    })
                 }
-
             })
-        console.log("useeffect")
-
     }, [pageRelaod])
     return (
         <label className={classes.label}>
@@ -53,5 +49,4 @@ function ProfilePicture(props) {
         </label>
     );
 }
-
 export default ProfilePicture;

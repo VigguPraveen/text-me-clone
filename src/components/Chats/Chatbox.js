@@ -5,28 +5,21 @@ import { eventBus } from '../../Event bus/eventBus';
 import axios from 'axios';
 
 function Chatbox(props) {
-
     const [chats, setChats] = useState('')
     const [chatterDetails, setChatterDetails] = useState({ name: "" })
-
     const chatHandler = (e) => {
         setChats(e.target.value)
         const personB = chatterDetails.personB;
         const personA = sessionStorage.getItem('storeNumber')
         let typingStatus = 1
         let randomNumber = Math.random()
-
         const obj = {
             personANumber: personA,
             personBNumber: personB,
             status: typingStatus
         }
-        console.log("object...", obj)
-
         axios.post('http://localhost:9898/updateTypingStatus', obj)
         eventBus.dispatch('randomKey', { message: randomNumber })
-
-
         setTimeout(() => {
             typingStatus = 0
             const newObj = {
@@ -35,10 +28,8 @@ function Chatbox(props) {
                 status: typingStatus
             }
             axios.post('http://localhost:9898/updateTypingStatus', newObj)
-        }, 10000)
-
+        }, 5000)
     }
-
     const sendChatHandler = () => {
         const personA = sessionStorage.getItem('storeNumber')
         const requestObject = {
@@ -58,13 +49,10 @@ function Chatbox(props) {
         } else {
             alert(`You have no messages to send to ${chatterDetails.name}`)
         }
-        
     }
-
     useEffect(() => {
         eventBus.on("chatterDetails", (data) => {
             setChatterDetails(data.message)
-            console.log(data.message)
         })
     }, [])
     return (
@@ -72,7 +60,6 @@ function Chatbox(props) {
             <input className={classes.chatbox} onChange={chatHandler} value={chats} />
             <SendMessageIcon onClick={sendChatHandler} />
         </div>
-
     );
 }
 
